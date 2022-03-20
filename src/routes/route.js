@@ -5,6 +5,7 @@ const authorController = require("../controllers/authorController")
 const blogsController = require("../controllers/blogsController")
 const middleWere = require('../middleWare/auth')
 
+// PHASE 1:
 
 // AUTHOR APIS
 router.post("/createAuthor",authorController.author)  // create author

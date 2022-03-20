@@ -11,6 +11,7 @@ const authenticate = function (req, res, next) {
       let decodedToken = jwt.verify(token, "secret-key");
       if (!decodedToken)
          return res.status(400).send({ status: false, msg: "token is invalid" });
+      // req.user =  decodedToken.authorId
 
       next()
    } 
