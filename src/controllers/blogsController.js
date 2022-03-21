@@ -11,7 +11,7 @@ const blogs = async function (req, res) {
     let authorId = data.authorId
     const author_details = await authorModel.findById(authorId)
     if (!author_details) {
-      res.status(400).send("Invalid");
+     return res.status(400).send("Invalid");
     }
     req.body.isPublished = true;
     if (Object.keys(data).length != 0) {
@@ -19,7 +19,7 @@ const blogs = async function (req, res) {
       res.status(201).send({ msg: savedData });
     }
     else {
-      res.status(400).send({ msg: "BAD REQUEST" })
+     return res.status(400).send({ msg: "BAD REQUEST" })
     }
   } catch (err) {
     res.status(500).send({ status: false, Error: err });
@@ -73,11 +73,11 @@ const deleteBlog = async function (req, res) {
   try {
     let blogId = req.params.blogId
     if (!blogId) {
-      res.status(400).send({ status: false, msg: "blogId is required, BAD REQUEST" })
+     return res.status(400).send({ status: false, msg: "blogId is required, BAD REQUEST" })
     }
-    let blogDetails = await blogsModel.findOne({ _id: blogId }, { isDeleted: false })
+    let blogDetails = await blogsModel.findOne({ _id: blogId , isDeleted: false })
     if (!blogDetails) {
-      res.status(404).send({ status: false, msg: "blog not exist" })
+   res.status(404).send({ status: false, msg: "blog already deleted" })
     } else {
       let blogDetails = await blogsModel.updateOne({ _id: blogId }, { $set: { isDeleted: true ,deletedAt:Date(),isPublished:false }})
       res.status(200).send({msg:"delected blog"})
